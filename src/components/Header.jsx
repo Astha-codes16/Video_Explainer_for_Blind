@@ -34,7 +34,7 @@ const Header = () => {
   return (
     <>
       {/* HERO SECTION: Increased my-10 to my-20 and gap to 16 */}
-      <div className="flex flex-col lg:flex-row items-center md:mt-40 justify-between my-40 mx-8 sm:mx-20 xl:mx-44 gap-16">
+      <div className="flex flex-col lg:flex-row items-center justify-between my-20 mx-8 sm:mx-20 xl:mx-44 gap-16">
         <div className="lg:flex-2 text-left">
           {/* Heading scaled from 6xl to 7xl */}
           <h1 className="text-4xl sm:text-7xl font-bold sm:leading-[1.1] text-[#FEFFFF]">
@@ -49,7 +49,7 @@ const Header = () => {
 
           <div className="mt-10 flex flex-wrap gap-6">
             <button
-              onClick={() => navigate("/auth/signup")}
+              onClick={() => navigate("/auth/signin")}
               className="getStarted px-10 py-4 text-xl text-white bg-primary active:scale-95 hover:bg-primary/80 transition rounded-xl font-bold shadow-xl shadow-primary/20"
             >
               Get started - It's free

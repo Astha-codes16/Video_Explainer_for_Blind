@@ -41,44 +41,62 @@ const Navbar = () => {
   };
 
   return (
-      <>
-          {/* Increased py-4 to py-6 and px sizes */}
-          <nav className="fixed top-0 z-50 flex bg-[#191A1B] items-center justify-between w-full py-6 px-6 md:px-20 lg:px-32 xl:px-44 backdrop-blur border-b text-white border-slate-800 min-h-20">
-              <Link to={'/'} className="flex items-center gap-4">
-                  {/* Increased logo height from h-8 to h-10 */}
-                  <img src='logo.png' alt="VisionCast Logo" className="h-8 sm:h-10 w-auto object-contain" />
-                  <span className="text-[#FEFFFF] font-bold tracking-tight text-xl sm:text-2xl">
-                      VISIONCAST
-                  </span>
-              </Link>
+    // Added 'nav' className target for GSAP
+    <nav className="relative bg-[#18181b] border-b border-gray-800 z-50">
+      <div className="flex items-center justify-between px-6 h-16">
+        
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <div className="text-white font-bold text-xl tracking-wide flex items-center gap-2">
+            <img src={logo} alt="VisionCast Logo" className="h-8 w-8 object-contain" />
+            VISIONCAST
+          </div>
+        </Link>
 
-              {/* Increased text size to text-lg and gap to 12 */}
-              <div className="hidden md:flex items-center gap-12 transition duration-500">
-                  {['Home', 'Upload Video', 'My Library', 'How it works'].map((item) => (
-                      <Link 
-                          key={item}
-                          to={item === 'Home' ? '/' : `/${item.toLowerCase().replace(/ /g, '')}`} 
-                          className="relative group py-2 text-lg text-gray-300 hover:text-white transition-colors"
-                      >
-                          {item}
-                          <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary transition-all duration-300 -translate-x-1/2 group-hover:w-full"></span>
-                      </Link>
-                  ))}
-              </div>
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <NavItem to="/" label="Home" />
+          <NavItem to="/upload" label="Upload Video" />
+          <NavItem to="/library" label="My Library" />
 
-              <div className="flex items-center gap-4">
-                  {/* Bigger button padding and text */}
-                  <button onClick={() => navigate('/auth/signin')} className="px-8 py-2.5 text-lg bg-primary active:scale-95 hover:bg-primary/80 transition rounded-lg font-medium">
-                      Get started
-                  </button>
-              </div>
+          <a href="#" className="relative group flex flex-col items-center justify-center text-gray-400 hover:text-white transition-colors py-1">
+            <span>How It Works</span>
+            <span className="absolute bottom-0 left-0 w-full h-[2px] bg-teal-400 origin-center scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+          </a>
+        </div>
 
-              <button className="md:hidden active:scale-90 transition" onClick={() => setMenuOpen(true)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
-              </button>
-          </nav>
-          {/* ... Mobile Menu Logic stays the same ... */}
-      </>
+        {/* Right Side */}
+        <div className="flex items-center gap-4">
+          <a href="#" className="hidden md:flex items-center gap-4 text-gray-400 text-sm border-l border-gray-700 pl-6 hover:text-white transition-colors">
+            <div className="flex items-center gap-1">
+              <HelpCircle size={18} />
+              <span>Profile</span>
+            </div>
+            <div className="bg-gray-700 rounded-full p-1.5 text-gray-300">
+              <User size={20} />
+            </div>
+          </a>
+
+          <button className="md:hidden text-gray-300 hover:text-white p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-[#18181b] border-b border-gray-800 animate-fade-in shadow-2xl">
+          <div className="flex flex-col p-4 space-y-4">
+            <Link to="/" onClick={() => setIsMenuOpen(false)} className="text-gray-300 font-medium hover:text-white py-2 border-b border-gray-800">Home</Link>
+            <Link to="/upload" onClick={() => setIsMenuOpen(false)} className="text-teal-400 font-bold py-2 border-b border-gray-800">Upload Video</Link>
+            <Link to="/library" onClick={() => setIsMenuOpen(false)} className="text-gray-300 font-medium hover:text-white py-2 border-b border-gray-800">My Library</Link>
+            <a href="#" className="flex items-center gap-3 text-gray-300 font-medium hover:text-white py-2 mt-2">
+              <div className="bg-gray-700 rounded-full p-1"><User size={18} /></div> Profile / Login
+            </a>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 
