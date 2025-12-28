@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const navigate = useNavigate(); // Ensure you define this or pass it as a prop
-
+ 
   return (
       <>
           {/* HERO SECTION: Increased my-10 to my-20 and gap to 16 */}
@@ -56,6 +56,45 @@ const Header = () => {
                       <p className="text-base sm:text-lg text-gray-400 leading-relaxed">{feature.desc}</p>
                   </div>
               ))}
+          </div>
+        
+         {/* REVIEW SECTION */}
+         <div className="my-32">
+            <div className='mx-8 sm:mx-20 xl:mx-44'>
+                <h1 className='text-4xl sm:text-7xl font-bold sm:leading-[1.1] text-[#FEFFFF]'>
+                Trusted by <span className="text-primary">Visionaries</span> Worldwide
+                </h1>
+            </div>
+
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-10 mt-20 mb-32 mx-8 sm:mx-20 xl:mx-44'>
+                {[
+                    { 
+                        name: "Sarah Jenkins", 
+                        role: "Accessibility Expert", 
+                        desc: "VisionCast is a game-changer. The AI's ability to describe emotions in real-time is something I haven't seen elsewhere." 
+                    },
+                    { 
+                        name: "Marcus Chen", 
+                        role: "Content Creator", 
+                        desc: "I used to spend hours writing descriptions. Now, VisionCast handles the heavy lifting perfectly. A must-have for creators." 
+                    },
+                    { 
+                        name: "Elena Rodriguez", 
+                        role: "Special Educator", 
+                        desc: "My visually impaired students can finally follow along with any video seamlessly. The timing is absolutely spot on." 
+                    }
+                ].map((review, i) => (
+                    <div key={i} className="min-h-72 w-full bg-[#2D2D31] border border-white/10 rounded-3xl p-10 flex flex-col justify-between transition-all hover:border-primary/40">
+                        <p className="text-lg italic text-gray-300 leading-relaxed mb-6">
+                            "{review.desc}"
+                        </p>
+                        <div>
+                            <h2 className="text-xl font-bold text-[#FEFFFF]">{review.name}</h2>
+                            <p className="text-primary text-sm font-semibold uppercase tracking-widest">{review.role}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
           </div>
       </>
   );

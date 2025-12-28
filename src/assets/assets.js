@@ -12,3 +12,24 @@ export const footer_data = [
         links: ["Instagram", "Twitter", "Facebook", "YouTube"]
     }
 ];
+export const Reviews_data = [
+    {
+        
+        "name": "Michael Scott",
+        "content": "This is my new comment",
+       
+    },
+    {
+        
+        "name": "John Doe",
+        "content": "This is a nice blog",
+     
+    },
+    {
+        
+        "name": "Michael Scott",
+        "content": "This is my new comment",
+       
+    },
+   
+]
