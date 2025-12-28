@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Link, useNavigate } from 'react-router-dom'; // Added useNavigate
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import UploadSection from "./components/UploadSection";
 import OptionsSection from "./components/OptionsSection";
 import VideoList from "./components/VideoList";
+import LibraryPage from './pages/LibraryPage'; 
 
 const HomePage = () => (
   <div className="flex items-center justify-center h-[60vh] text-white">
@@ -21,28 +22,40 @@ const FriendGenerationPage = () => (
 function App() {
   const [sharedFile, setSharedFile] = useState(null);
   const [allVideos, setAllVideos] = useState([]); 
-  const navigate = useNavigate(); // Hook to move pages automatically
+  const navigate = useNavigate();
 
-  // --- 1. AUTOMATIC DATA FETCHING (Keep existing logic) ---
+  // --- 1. REAL PRODUCTION DATA FETCHING ---
+  // This runs immediately when the app loads, and then every 5 seconds.
   useEffect(() => {
     const fetchVideos = async () => {
       try {
+        // Replace 'http://localhost:4000' with your friend's actual backend URL
         const response = await fetch('http://localhost:4000/api/videos');
+        
         if (response.ok) {
           const data = await response.json();
+          // We strictly set the state to whatever the backend tells us.
+          // If backend says "failed", UI shows "failed".
           setAllVideos(data);
+        } else {
+            console.error("Failed to fetch videos");
         }
       } catch (error) {
-        console.log("Waiting for backend...");
+        console.log("Backend not connected yet (Waiting...)");
       }
     };
+
+    // Initial Fetch
     fetchVideos();
+
+    // Poll every 5 seconds to keep status accurate (Real-time feel)
     const interval = setInterval(fetchVideos, 5000);
+
+    // Cleanup when app closes
     return () => clearInterval(interval);
   }, []);
 
-  // --- 2. THE MAIN UPLOAD FUNCTION ---
-  // This sends the Video + The Prompt (Options) to the backend
+  // --- 2. REAL UPLOAD FUNCTION ---
   const handleJobSubmission = async (optionsData) => {
     if (!sharedFile) {
       alert("Please select a video file first!");
@@ -50,31 +63,35 @@ function App() {
     }
 
     try {
-      // A. Create the bundle to send
       const formData = new FormData();
-      formData.append('video', sharedFile); // The Video File
-      formData.append('language', optionsData.language); // Prompt Option 1
-      formData.append('skip_silence', optionsData.skipSilence); // Prompt Option 2
-      // Add any other options here...
+      formData.append('video', sharedFile);
+      formData.append('language', optionsData.language);
+      formData.append('skip_silence', optionsData.skipSilence);
+      
+      console.log("Uploading to backend...");
 
-      console.log("Sending data to backend...");
-
-      // B. Send to Backend (Simulated for now)
-      // In real life, uncomment this:
+      // A. Send the File (Uncomment this when backend is ready)
       /* const response = await fetch('http://localhost:4000/api/upload', {
         method: 'POST',
         body: formData,
       });
-      if (!response.ok) throw new Error('Upload failed');
+
+      if (!response.ok) {
+        throw new Error('Upload failed on server');
+      }
       */
-     setSharedFile(null);
-      // C. If successful, REDIRECT to the Processing Page
-      // This happens instantly like a big website
+
+      // B. Clear the file input
+      setSharedFile(null);
+
+      // C. Redirect User to Processing Page
+      // Even though we redirect, the 'useEffect' above keeps running in the background,
+      // checking the database for the new video.
       navigate('/generating');
 
     } catch (error) {
       console.error("Upload error:", error);
-      alert("Something went wrong uploading the video.");
+      alert("Error: " + error.message);
     }
   };
 
@@ -92,9 +109,6 @@ function App() {
                 <UploadSection onFileSelect={setSharedFile} selectedFile={sharedFile} />
               </div>
               <div className="h-full">
-                {/* Pass the submission function DOWN to OptionsSection 
-                   so the "Generate" button triggers it.
-                */}
                 <OptionsSection 
                   fileToUpload={sharedFile} 
                   onSubmit={handleJobSubmission} 
@@ -102,35 +116,60 @@ function App() {
               </div>
             </div>
 
-            {/* Recent Videos Section */}
-            <section className="space-y-8 animate-fade-in delay-200">
-              <div className="flex items-center justify-between px-2">
-                <h2 className="text-2xl font-bold tracking-tight">
-                  {allVideos.length > 0 ? "Recent Uploads" : "No recent videos found"}
-                </h2>
+            {/* --- RECENT VIDEOS SECTION --- */}
+            <section className="space-y-6 pt-10 border-t border-gray-800">
+              
+              <div className="flex items-end justify-between px-1">
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight text-white">
+                    Your Recent Generations
+                  </h2>
+                  {/* Updated Text per your request */}
+                  <p className="text-gray-500 text-sm mt-1">
+                    {allVideos.length > 0 
+                      ? "Check the status of your videos while you wait."
+                      : "Upload a video to see it appear here while you wait."}
+                  </p>
+                </div>
+
+                {/* 'See Full Library' only appears if you have more than 3 videos */}
                 {allVideos.length > 3 && (
-                  <Link to="/library" className="text-teal-400 hover:text-teal-300 text-sm font-semibold transition-colors">
-                    See More →
+                  <Link 
+                    to="/library" 
+                    className="text-teal-400 hover:text-teal-300 text-sm font-semibold flex items-center gap-1 transition-colors pb-1"
+                  >
+                    See Full Library →
                   </Link>
                 )}
               </div>
+
+              {/* Strict Limit: Only show 3 videos here */}
               <VideoList videos={allVideos.slice(0, 3)} />
+
+              {/* Small bottom link if list is short */}
+              {allVideos.length > 0 && allVideos.length <= 3 && (
+                  <div className="flex justify-center mt-6">
+                    <Link 
+                      to="/library" 
+                      className="text-gray-400 hover:text-white text-sm border-b border-gray-700 hover:border-gray-400 transition-all pb-0.5"
+                    >
+                      View all in Library
+                    </Link>
+                  </div>
+              )}
+
             </section>
           </main>
         } />
 
         <Route path="/generating" element={<FriendGenerationPage />} />
         
-        <Route path="/library" element={
-          <div className="max-w-7xl mx-auto px-6 py-12">
-            <h1 className="text-3xl font-bold mb-8">Your Library</h1>
-            <VideoList videos={allVideos} />
-          </div>
-        } />
+        {/* Pass Real Data to Library */}
+        <Route path="/library" element={<LibraryPage videos={allVideos} />} />
 
       </Routes>
     </div>
   );
 }
 
-export default App;          
+export default App;
