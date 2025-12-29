@@ -23,7 +23,7 @@ const Main = () => {
 
   return (
     <>
-      <Navbar />
+      
 
       {/* Header */}
       <div className="text-center py-16 px-8 sm:px-20 xl:mx-44">
