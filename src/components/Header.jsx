@@ -49,14 +49,14 @@ const Header = () => {
 
           <div className="mt-10 flex flex-wrap gap-6">
             <button
-  onClick={() => navigate("/auth/signin")}
-  className="px-10 py-4 text-xl text-[#09090b] bg-[#4DB6AC] hover:bg-[#45a29a] active:scale-95 transition-all duration-300 rounded-xl font-bold animate-fade-in-up 
+              onClick={() => navigate("/auth/login")}
+              className="px-10 py-4 text-xl text-[#09090b] bg-[#4DB6AC] hover:bg-[#45a29a] active:scale-95 transition-all duration-300 rounded-xl font-bold animate-fade-in-up 
   /* Glowing Effect using your teal color */
   shadow-[0_0_20px_5px_rgba(77,182,172,0.4)] 
   hover:shadow-[0_0_35px_10px_rgba(77,182,172,0.6)]"
->
-  Get started - It's free
-</button>
+            >
+              Get started - It's free
+            </button>
             <button className="watchDemo px-10 py-4 text-xl text-white border-2 border-white/20 active:scale-95 hover:bg-white/10 transition rounded-xl font-bold">
               Watch demo
             </button>

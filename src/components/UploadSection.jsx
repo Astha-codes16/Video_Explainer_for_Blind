@@ -49,7 +49,7 @@ const UploadSection = ({ onFileSelect, selectedFile }) => {
   return (
     <div className="flex flex-col h-full animate-fade-in-up">
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight tracking-tight">
-        Make Any Video <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-400">Accessible</span>
+        Make Any Video <br /> <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-400 to-emerald-400">Accessible</span>
       </h1>
       
       <div 
