@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-
+import Main from "./pages/Main";
 // Component Imports
 import Navbar from "./components/Navbar";
 import UploadSection from "./components/UploadSection";
@@ -10,6 +10,7 @@ import VideoList from "./components/VideoList";
 // Page Imports
 import LibraryPage from './pages/LibraryPage'; 
 import Home from './pages/Home';
+
 
 // Inline Component for Processing State
 const GenerationPage = () => (
@@ -100,7 +101,7 @@ function App() {
       <Routes>
         {/* Main Home Route - Pointing to the real Home component */}
         <Route path="/" element={<Home/>} />
-
+        <Route path='/mainPage' element={<Main/>}/>
         <Route path="/upload" element={
           <main className="max-w-7xl mx-auto px-6 py-12 space-y-24">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">

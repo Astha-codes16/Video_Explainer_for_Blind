@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
 
 const Main = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Main = () => {
 
   return (
     <>
-      <Navbar />
+      
 
       {/* Header */}
       <div className="text-center py-16 px-8 sm:px-20 xl:mx-44">
@@ -155,6 +156,7 @@ const Main = () => {
           </div>
         </div>
       </div>
+      
     </>
   );
 };
