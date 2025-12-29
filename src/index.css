@@ -1,13 +1,6 @@
-/* --- 1. FONTS (From Your Branch) --- */
+
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
-/* --- 2. TAILWIND SETUP (Standard) --- */
-@import "tailwindcss";
-
-/* Your @theme and @layer styles go below this */
-
-/* --- 3. GLOBAL STYLES (Combined) --- */
-/* --- 3. GLOBAL STYLES --- */
 @layer base {
   :root {
     --color-primary: #4DB6AC;
@@ -19,13 +12,11 @@
     font-family: "Outfit", sans-serif;
   }
 
-  /* Ensure @apply is used inside a selector, but NOT inside :root */
   button {
     @apply cursor-pointer;
   }
 }
 
-/* --- 4. ANIMATIONS (From Friend's Branch) --- */
 @layer utilities {
   .animate-fade-in-up {
     animation: fadeInUp 0.8s ease-out forwards;
@@ -41,7 +32,6 @@
   }
 }
 
-/* --- 5. KEYFRAMES (From Friend's Branch) --- */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -56,3 +46,5 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
+
+@import "tailwindcss";
