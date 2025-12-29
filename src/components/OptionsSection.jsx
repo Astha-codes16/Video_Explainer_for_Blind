@@ -13,7 +13,7 @@ const OptionsSection = ({ fileToUpload, onSubmit }) => {
   const handleGenerate = () => {
     // A. Validation: Ensure a video is selected
     if (!fileToUpload) {
-      alert("Please upload a video first!");
+      alert("Please upload a video or paste a link first!");
       return;
     }
 
@@ -104,7 +104,7 @@ const OptionsSection = ({ fileToUpload, onSubmit }) => {
             : 'bg-gray-700 text-gray-500 cursor-not-allowed'
           }`}
       >
-        {fileToUpload ? "Generate" : "Upload Video First"}
+        {fileToUpload ? "Generate" : "Upload Video or Paste First"}
       </button>
     </div>
   );

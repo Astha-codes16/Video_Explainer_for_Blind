@@ -24,6 +24,7 @@ const UploadSection = ({ onFileSelect, selectedFile }) => {
   const removeFile = () => {
     // Tell App.jsx to clear the file
     onFileSelect(null);
+    setLink('');
     if(fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -31,11 +32,18 @@ const UploadSection = ({ onFileSelect, selectedFile }) => {
   const handleLinkChange = (e) => {
     const value = e.target.value;
     setLink(value);
-    if (value && !/^(http|https):\/\/[^ "]+$/.test(value)) {
-      setError('Format is wrong. This is not a valid link.');
-    } else {
-      setError('');
-    }
+    const isValid = /^(http|https):\/\/[^ "]+$/.test(value);
+
+  if (value && !isValid) {
+    setError('Format is wrong. This is not a valid link.');
+  } else if (value && isValid) {
+    setError('');
+    // ADD THIS LINE: Pass the link string to the parent
+    onFileSelect(value); 
+  } else {
+    setError('');
+    onFileSelect(null);
+  }
   };
 
   const formatSize = (bytes) => {
@@ -90,11 +98,12 @@ const UploadSection = ({ onFileSelect, selectedFile }) => {
 
             <div className="flex flex-col items-center justify-center">
               <h3 className="text-white font-bold text-xl mb-2 break-all line-clamp-2">
-                {selectedFile.name}
-              </h3>
-              <p className="text-gray-400 text-sm mb-8">
-                {formatSize(selectedFile.size)}
-              </p>
+  {typeof selectedFile === 'string' ? 'Video Link' : selectedFile.name}
+</h3>
+
+<p className="text-gray-400 text-sm mb-8">
+  {typeof selectedFile === 'string' ? selectedFile : formatSize(selectedFile.size)}
+</p>
 
               <div className="flex gap-3 w-full">
                  <button 
