@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play, Clock, AlertCircle, Loader2, CheckCircle2, Film } from 'lucide-react';
+import playBg from "../assets/playBg.png"
 
 const VideoList = ({ videos, onVideoClick }) => {
   
@@ -65,7 +66,7 @@ const VideoList = ({ videos, onVideoClick }) => {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {videos.map((video) => (
         <div 
-          key={video.id} 
+          key={video._id} 
           onClick={() => handleCardClick(video)}
           className={`group relative bg-[#18181b] border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer
           ${video.status === 'processing' ? 'opacity-80' : ''}`}
@@ -73,7 +74,7 @@ const VideoList = ({ videos, onVideoClick }) => {
           {/* Thumbnail */}
           <div className="aspect-video relative overflow-hidden bg-gray-900">
             <img 
-              src={video.thumbnail || "https://via.placeholder.com/640x360?text=Processing"} 
+              src={video.thumbnail || playBg} 
               alt={video.title} 
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
