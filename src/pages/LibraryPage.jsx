@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import VideoList from '../components/VideoList';
+import useVideos from '../hooks/useVideos';
 
-const LibraryPage = ({ videos = [] }) => {
+const LibraryPage = () => {
+  const videos = useVideos();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  
 
   // --- Filter Logic ---
   const filteredVideos = videos.filter((video) => {

@@ -29,7 +29,7 @@ const Login = () => {
       setSuccess(res.data.message || "Login successful");
       localStorage.setItem("token", res.data.token);
 
-      navigate("/");
+      navigate("/upload");
     } catch (err) {
       setError(
         err.response?.data?.message || "Invalid email or password"

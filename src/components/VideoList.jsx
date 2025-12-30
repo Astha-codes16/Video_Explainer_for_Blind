@@ -1,8 +1,10 @@
 import React from 'react';
 import { Play, Clock, AlertCircle, Loader2, CheckCircle2, Film } from 'lucide-react';
 import playBg from "../assets/playBg.png"
+import { useNavigate } from 'react-router-dom';
 
 const VideoList = ({ videos, onVideoClick }) => {
+  const navigate = useNavigate() ;
   
   // --- 1. ACCURATE EMPTY STATE ---
   // This shows if the user has NEVER processed a video before.
@@ -30,7 +32,7 @@ const VideoList = ({ videos, onVideoClick }) => {
     if (video.status?.toLowerCase() === 'processing') {
       alert("⚠️ This video is still processing...");
     } else {
-      console.log(`Navigating to video: ${video.title}`);
+      navigate(`/app/${video._id}`);
     }
   };
 
@@ -61,6 +63,13 @@ const VideoList = ({ videos, onVideoClick }) => {
     );
   };
 
+  const formatTime = (seconds) => {
+    if (!seconds) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   // --- 3. THE VIDEO GRID ---
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -74,7 +83,7 @@ const VideoList = ({ videos, onVideoClick }) => {
           {/* Thumbnail */}
           <div className="aspect-video relative overflow-hidden bg-gray-900">
             <img 
-              src={video.thumbnail || playBg} 
+              src={video.thumbnailUrl || playBg} 
               alt={video.title} 
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
@@ -87,7 +96,7 @@ const VideoList = ({ videos, onVideoClick }) => {
             {/* Duration Badge */}
             {video.duration && (
                 <div className="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-1.5 py-0.5 rounded backdrop-blur-sm">
-                {video.duration}
+                {formatTime(video.duration)}
                 </div>
             )}
           </div>
@@ -99,9 +108,9 @@ const VideoList = ({ videos, onVideoClick }) => {
             </h3>
             <div className="flex items-center justify-between">
               {renderStatus(video.status)}
-              {video.date && (
+              {video.createdAt && (
                   <span className="text-gray-500 text-xs flex items-center gap-1">
-                    <Clock size={10} /> {video.date}
+                    <Clock size={10} /> {video.createdAt.slice(0,10)}
                   </span>
               )}
             </div>

@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const VideoCard = ({ video }) => {
+  const navigate = useNavigate() ;
+
   // Helper to determine status styling
   const getStatusStyles = (status) => {
     switch (status) {
@@ -14,13 +17,13 @@ const VideoCard = ({ video }) => {
         return 'bg-gray-700 text-gray-300';
     }
   };
-
+  
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-gray-600 transition-colors group cursor-pointer">
       {/* Thumbnail Section */}
       <div className="relative aspect-video">
         <img 
-          src={video.thumbnail} 
+          src={video.thumbnailUrl} 
           alt={video.title} 
           className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
         />
