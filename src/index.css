@@ -1,0 +1,76 @@
+/* --- 1. FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+/* --- 2. TAILWIND SETUP --- */
+@import "tailwindcss";
+
+/* --- 3. THEME CUSTOMIZATION (The V4 Way) --- */
+/* In v4, defining variables here automatically creates utility classes like 'bg-primary' */
+@theme {
+  --color-primary: #4DB6AC;
+  
+  /* Custom Animations: This automatically creates '.animate-fade-in-up', etc. */
+  --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
+  --animate-fade-in: fadeIn 1s ease-out forwards;
+  --animate-bounce-slow: bounce 3s infinite;
+  --animate-bounce-short: bounceShort 0.5s 1;
+
+  /* Keyframes inside @theme are cleaner in v4 */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes bounceShort {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+}
+
+/* --- 4. GLOBAL STYLES --- */
+@layer base {
+  body {
+    background-color: #09090b;
+    color: white;
+    font-family: "Outfit", sans-serif;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+  .animate-bounce-short {
+    animation: bounceShort 0.5s 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounceShort {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@import "tailwindcss";
